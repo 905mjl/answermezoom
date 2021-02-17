@@ -1,9 +1,9 @@
 import speech_recognition as sr
 import json
 import urllib3
+from pynput.keyboard import Controller
 
-snow_path = "C:\\Users\\mlf05\\Desktop\\answermezoom"
-
+keyboard = Controller()
 r = sr.Recognizer()
 m = sr.Microphone()
 r.pause_threshold = .6
@@ -42,8 +42,8 @@ try:
                 print("Looking up: " + question)
                 answer = get_answer(question)
                 print("Answer: " + answer)
-                # print(get_answer(question))
-                # we need some special handling here to correctly print unicode characters to standard output
+                keyboard.type(answer)
+
             elif str is bytes:  # this version of Python uses bytes for strings (Python 2)
                 print(u"You said {}".format(value).encode("utf-8"))
             else:  # this version of Python uses unicode for strings (Python 3+)
