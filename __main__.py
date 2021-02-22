@@ -2,7 +2,7 @@ import speech_recognition as sr
 import json
 import urllib3
 from pynput.keyboard import Controller
-from direct import automate
+from direct import open_chat
 
 keyboard = Controller()
 r = sr.Recognizer()
@@ -51,7 +51,7 @@ try:
                 try:
                     answer = get_answer(question)
                     print("Answer: " + answer)
-                    automate()
+                    open_chat()
                     keyboard.type(answer)
 
                 except KeyError:
