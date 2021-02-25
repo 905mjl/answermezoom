@@ -12,7 +12,7 @@
 import time
 from pynput.keyboard import Key, Controller
 from python_imagesearch.imagesearch import imagesearch
-
+from focus import cursor
 keyboard = Controller()
 
 shortcuts = {
@@ -41,7 +41,6 @@ def determine_chat() -> bool:
                                           imagesearch(image_paths['typemessage'])
     for pos in positions:
         for coordinate in pos:
-            print(coordinate)
             if coordinate == -1:
                 return False
 
@@ -53,8 +52,11 @@ def open_chat():
     if determine_chat():
         print("chat was open")
         press_many(shortcuts['open chat'])
-        time.sleep(2)
+        time.sleep(1.5)
         press_many(shortcuts['open chat'])
     else:
         print('chat was not open')
         press_many(shortcuts['open chat'])
+    time.sleep(1.5)
+    cursor()
+    time.sleep(1.5)
