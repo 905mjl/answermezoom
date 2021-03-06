@@ -9,7 +9,6 @@
  - keyboard sim
 4. use keyboard simulator to type answer
 '''
-import time
 from pynput.keyboard import Key, Controller
 from python_imagesearch.imagesearch import imagesearch
 from focus import cursor
@@ -51,12 +50,7 @@ def open_chat():
     press_many(shortcuts['open zoom'])
     if determine_chat():
         print("chat was open")
-        press_many(shortcuts['open chat'])
-        time.sleep(1.5)
-        press_many(shortcuts['open chat'])
+        cursor()
     else:
         print('chat was not open')
         press_many(shortcuts['open chat'])
-    time.sleep(1.5)
-    cursor()
-    time.sleep(1.5)

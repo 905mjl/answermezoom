@@ -3,6 +3,7 @@ import json
 import urllib3
 from pynput.keyboard import Controller
 from direct import open_chat
+from googlesearch import search
 
 keyboard = Controller()
 r = sr.Recognizer()
@@ -13,7 +14,7 @@ url = "https://rdc1nf9jza.execute-api.us-east-1.amazonaws.com/api/qna"
 api_key = "9HeBB23LR4a8mruNNf3kq17fFuR9b4JP1q5KSMCC"
 
 
-def get_answer(question: str) -> str:
+def get_Eanswer(question: str) -> str:
     http = urllib3.PoolManager()
     res = http.request('GET',
                      url,
@@ -21,6 +22,20 @@ def get_answer(question: str) -> str:
                      fields={'search_string': question})
     result_json = json.loads(res.data)
     return result_json['longAnswer']
+
+def get_Ganswer(question: str) -> str:
+    my_results = []
+    for i in search(question,  # The query you want to run
+                    tld='com',  # The top level domain
+                    lang='en',  # The language
+                    num=1,  # Number of results per page
+                    start=0,  # First result to retrieve
+                    stop=1,  # Last result to retrieve
+                    pause=2.0,  # Lapse between HTTP requests
+                    ):
+        my_results.append(i)
+    print(my_results)
+    return my_results
 
 
 try:
@@ -49,10 +64,14 @@ try:
                 print("Looking up: " + question)
 
                 try:
-                    answer = get_answer(question)
+                    answer = get_Eanswer(question)
+                    link = get_Ganswer(question)
                     print("Answer: " + answer)
                     open_chat()
+                    for i in link:
+                        keyboard.type(i)
                     keyboard.type(answer)
+
 
                 except KeyError:
                     print("No results showing for that question :(")
