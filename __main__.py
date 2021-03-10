@@ -1,7 +1,7 @@
 import speech_recognition as sr
 import json
 import urllib3
-from pynput.keyboard import Controller
+from pynput.keyboard import Key, Controller
 from direct import open_chat
 from googlesearch import search
 
@@ -26,12 +26,8 @@ def get_Eanswer(question: str) -> str:
 def get_Ganswer(question: str) -> str:
     my_results = []
     for i in search(question,  # The query you want to run
-                    tld='com',  # The top level domain
                     lang='en',  # The language
-                    num=1,  # Number of results per page
-                    start=0,  # First result to retrieve
-                    stop=1,  # Last result to retrieve
-                    pause=2.0,  # Lapse between HTTP requests
+                    num_results=1,  # Number of results per page
                     ):
         my_results.append(i)
     print(my_results)
@@ -64,17 +60,20 @@ try:
                 print("Looking up: " + question)
 
                 try:
-                    answer = get_Eanswer(question)
-                    link = get_Ganswer(question)
+                    answer = get_Eanswer(question) + " "
                     print("Answer: " + answer)
                     open_chat()
-                    for i in link:
-                        keyboard.type(i)
                     keyboard.type(answer)
-
-
                 except KeyError:
                     print("No results showing for that question :(")
+
+                try:
+                    link = get_Ganswer(question)
+                    for i in link:
+                        keyboard.type(i)
+                    keyboard.press(Key.enter)
+                except:
+                    print("nothing from google")
 
             elif str is bytes:  # this version of Python uses bytes for strings (Python 2)
                 print(u"You said {}".format(value).encode("utf-8"))

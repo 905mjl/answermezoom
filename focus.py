@@ -3,7 +3,7 @@ from python_imagesearch.imagesearch import imagesearch
 
 def cursor():
     mouse = Controller()
-    position = imagesearch('C:\\Users\\mlf05\\Desktop\\answermezoom\\typemessage.png')
+    position = imagesearch('./answermezoom/typemessage.png')
     temp =[1]*2
     for i,pos in zip(range(2),position):
         temp[i] = pos + 25
